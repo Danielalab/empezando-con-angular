@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { FormAddTareaComponent } from './components/form-add-tarea/form-add-tarea.component';
 import { ListTasksComponent } from './components/list-tasks/list-tasks.component';
 import { TaskComponent } from './components/task/task.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { TaskComponent } from './components/task/task.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [
     
