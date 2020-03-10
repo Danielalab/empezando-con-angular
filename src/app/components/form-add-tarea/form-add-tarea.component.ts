@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
+import { TasksService } from 'src/app/services/tasks.service';
 
 @Component({
   selector: 'app-form-add-tarea',
@@ -11,10 +12,10 @@ export class FormAddTareaComponent implements OnInit {
     taskValue: new FormControl('')
   });
 
-  constructor() { }
+  constructor(private tasksService: TasksService) { }
 
   sendTask() {
-    console.log(this.taskForm.value);
+    this.tasksService.addTask(this.taskForm.value.taskValue);
   }
 
   ngOnInit(): void {
