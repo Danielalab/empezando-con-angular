@@ -1,12 +1,18 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
+export interface Task {
+  id: number,
+  text: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class TasksService {
   private arrTasksSource = new BehaviorSubject([]);
-  currentArrTasks = this.arrTasksSource.asObservable;
+  currentArrTasks = this.arrTasksSource.asObservable();
 
   constructor() { }
 
