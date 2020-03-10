@@ -7,14 +7,14 @@ import { TasksService, Task } from 'src/app/services/tasks.service';
   styleUrls: ['./list-tasks.component.css']
 })
 export class ListTasksComponent implements OnInit {
-  listsTasks: Task[];
+  listTasks: Task[];
 
   constructor(private tasksService: TasksService) { }
 
   ngOnInit(): void {
     this.tasksService.currentArrTasks
       .subscribe((arrTaks) => {
-        this.listsTasks = arrTaks;
+        this.listTasks = arrTaks;
       })
   }
 
