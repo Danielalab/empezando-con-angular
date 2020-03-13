@@ -22,4 +22,14 @@ describe('FormAddTareaComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('Deberia actualizar el valor del la etiqueta input', () => {
+    
+  });
+  
+
+  it('Deberia actualizar el valor en el control', () => {
+    
+  });
+  
 });
