@@ -16,6 +16,9 @@ export class FormAddTareaComponent implements OnInit {
 
   sendTask() {
     this.tasksService.addTask(this.taskForm.value.taskValue);
+    this.taskForm.setValue({
+      taskValue: new FormControl('')
+    })
   }
 
   ngOnInit(): void {
