@@ -22,6 +22,8 @@ describe('FormAddTareaComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+<<<<<<< HEAD
+=======
 
   it('Deberia actualizar el valor del control en el input', () => {
     // verificando el valor inicial del input
@@ -71,4 +73,5 @@ describe('FormAddTareaComponent', () => {
     expect(tasksService.addTask).toHaveBeenCalledWith('task test');
   });
   
+>>>>>>> 0a9b9c1... adding comments form test
 });

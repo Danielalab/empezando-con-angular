@@ -1,14 +1,29 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 
 import { FormAddTareaComponent } from './form-add-tarea.component';
+import { TasksService } from 'src/app/services/tasks.service';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { ReactiveFormsModule, FormControl } from '@angular/forms';
 
 describe('FormAddTareaComponent', () => {
   let component: FormAddTareaComponent;
   let fixture: ComponentFixture<FormAddTareaComponent>;
+  let formDe: DebugElement;
+  let inputDe: DebugElement;
+  let buttonDe: DebugElement;
+  let tasksService: Partial<TasksService>;
 
   beforeEach(async(() => {
+    // creando un fake service object con un spy addTask method
+    let taskServiceStub = jasmine.createSpyObj('TasksService', ['addTask']);
+
     TestBed.configureTestingModule({
-      declarations: [ FormAddTareaComponent ]
+      declarations: [ FormAddTareaComponent ],
+      providers: [
+        { provide: TasksService, useValue: taskServiceStub }
+      ],
+      imports: [ ReactiveFormsModule ]
     })
     .compileComponents();
   }));
@@ -16,7 +31,10 @@ describe('FormAddTareaComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(FormAddTareaComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    tasksService = TestBed.inject(TasksService);
+    formDe = fixture.debugElement.query(By.css('form'));
+    inputDe = formDe.query(By.css('input'));
+    buttonDe = formDe.query(By.css('button'));
   });
 
   it('should create', () => {
