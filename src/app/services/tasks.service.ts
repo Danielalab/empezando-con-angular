@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore/firestore';
+import { AngularFirestoreCollection } from '@angular/fire/firestore/public_api';
 
 export interface Task {
   text: string
@@ -12,8 +13,13 @@ export interface Task {
 })
 
 export class TasksService {
+  private tasksCollection: AngularFirestoreCollection<Task>;
+  tasks: Observable<Task[]>;
 
-  constructor(private firestoreDb: AngularFirestore) { }
+  constructor(private firestoreDb: AngularFirestore) {
+    this.tasksCollection = this.firestoreDb.collection<Task>('tasks');
+    this.tasks = this.tasksCollection.valueChanges();
+  }
 
   addTask(task) {
     // creando el obj con la data de la tarea
@@ -22,8 +28,10 @@ export class TasksService {
       complete: false,
     };
     // agregando taskObj a firestore
-    const tasksCollection = this.firestoreDb.collection<Task>('tasks');
-    tasksCollection.add(taskObj);
+    this.tasksCollection.add(taskObj);
   }
 
+  getTasks() {
+    return this.tasks;
+  }
 }
