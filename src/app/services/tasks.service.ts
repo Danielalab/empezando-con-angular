@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/firestore/firestore';
 
 export interface Task {
-  id: number,
   text: string
+  complete: boolean,
 }
 
 @Injectable({
@@ -11,24 +12,18 @@ export interface Task {
 })
 
 export class TasksService {
-  private arrTasksSource = new BehaviorSubject([]);
-  currentArrTasks = this.arrTasksSource.asObservable();
 
-  constructor() { }
+  constructor(private firestoreDb: AngularFirestore) { }
 
   addTask(task) {
     // creando el obj con la data de la tarea
-    const taskObj = {
+    const taskObj: Task = {
       text: task,
-      id: this.arrTasksSource.value.length + 1
+      complete: false,
     };
-    // creando el arr actualizado con la nueva tarea
-    const newArrTasks = [
-      ...this.arrTasksSource.value,
-      taskObj
-    ]
-    // actualizando el valor del arr de tareas
-    this.arrTasksSource.next(newArrTasks);
+    // agregando taskObj a firestore
+    const tasksCollection = this.firestoreDb.collection<Task>('tasks');
+    tasksCollection.add(taskObj);
   }
 
 }
