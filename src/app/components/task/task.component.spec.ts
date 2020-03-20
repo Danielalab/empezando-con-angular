@@ -32,7 +32,7 @@ describe('TaskComponent', () => {
     // li element deberia estar vacio
     expect(liEl.textContent).toBe('');
     // agregando el valor del Input() data
-    component.data = { id: 2, text: 'test' };
+    component.data = { id: '2', text: 'test', complete: false };
     fixture.detectChanges();
     expect(liEl.textContent).toBe('test')
   });
