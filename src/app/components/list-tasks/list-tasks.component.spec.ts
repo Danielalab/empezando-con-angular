@@ -12,9 +12,9 @@ describe('ListTasksComponent', () => {
   let component: ListTasksComponent;
   let fixture: ComponentFixture<ListTasksComponent>;
   let tasksService;
-  let tasksServiceStub: Partial<TasksService>;
   let arrTasksTest: Task[];
   let ulEl: HTMLElement;
+  let getTasksSpy;
 
   beforeEach(async(() => {
     arrTasksTest = [
@@ -22,16 +22,15 @@ describe('ListTasksComponent', () => {
       { id: '2', text: 'text 2', complete: false }
     ];
 
-    tasksServiceStub = {
-      currentArrTasks: of(arrTasksTest),
-    };
+    let taskServiceStub = jasmine.createSpyObj('TasksService', ['getTasks']);
+    getTasksSpy = taskServiceStub.getTasks.and.returnValue( of(arrTasksTest) );
 
     TestBed.configureTestingModule({
       declarations: [
         ListTasksComponent,
         TaskStubComponent
       ],
-      providers: [ { provide: TasksService, useValue: tasksServiceStub } ]
+      providers: [ { provide: TasksService, useValue: taskServiceStub } ]
     })
     .compileComponents();
   }));
@@ -42,7 +41,6 @@ describe('ListTasksComponent', () => {
     // TasksService from the root injector
     tasksService = TestBed.inject(TasksService);
     ulEl = fixture.nativeElement;
-    // fixture.detectChanges();
   });
 
   it('should create', () => {
@@ -66,8 +64,8 @@ describe('ListTasksComponent', () => {
       { id: 2, text: 'text 2' },
       { id: 3, text: 'text 3' }
     ]
-    // cambiar el valor de retorno de currentArrTasks
-    tasksService.currentArrTasks = of(newArrTasks);
+    // cambiar el valor de retorno de getTasks
+    getTasksSpy.and.returnValue(of(newArrTasks));
 
     fixture.detectChanges();
 
