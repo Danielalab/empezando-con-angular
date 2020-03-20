@@ -12,7 +12,7 @@ export class ListTasksComponent implements OnInit {
   constructor(private tasksService: TasksService) { }
 
   ngOnInit(): void {
-    this.tasksService.currentArrTasks
+    this.tasksService.getTasks()
       .subscribe((arrTaks) => {
         this.listTasks = arrTaks;
       })

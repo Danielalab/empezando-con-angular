@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { AngularFirestore } from '@angular/fire/firestore/firestore';
-import { AngularFirestoreCollection } from '@angular/fire/firestore/public_api';
+import { Observable } from 'rxjs';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import 'firebase/firestore';
 
 export interface Task {
   text: string
   complete: boolean,
+  id: string,
 }
 
 @Injectable({
@@ -23,12 +24,13 @@ export class TasksService {
 
   addTask(task) {
     // creando el obj con la data de la tarea
-    const taskObj: Task = {
+    const taskObj = {
       text: task,
       complete: false,
+      id: this.firestoreDb.createId(),
     };
     // agregando taskObj a firestore
-    this.tasksCollection.add(taskObj);
+    this.tasksCollection.doc(taskObj.id).set(taskObj);
   }
 
   getTasks() {
